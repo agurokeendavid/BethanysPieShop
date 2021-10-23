@@ -17,12 +17,23 @@ namespace BethanysPieShop.Controllers
 
         public ViewResult List()
         {
-            PiesListViewModel piesListViewModel = new PiesListViewModel
+            var piesListViewModel = new PiesListViewModel
             {
                 Pies = _pieRepository.AllPies,
                 CurrentCategory = "Cheese cakes"
             };
             return View(piesListViewModel);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var pie = _pieRepository.GetPieById(id);
+            if (pie == null)
+            {
+                return NotFound();
+            }
+
+            return View(pie);
         }
     }
 }
